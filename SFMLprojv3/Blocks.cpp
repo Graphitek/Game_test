@@ -53,14 +53,6 @@ Cube::Cube(int ile_width, int ile_hight, float posX, float posY, Texture &textur
 	}
 }
 
-/*void Cube::setSize(int id, int width, int hight)
-{
-	size.x = width;
-	size.y = hight;
-	shape.at(id).setSize(size);
-	shape.at(id).setOrigin(size.x / 2, size.y / 2);
-}*/
-
 
 void Blocks::getPoints()
 {
@@ -88,13 +80,10 @@ bool Blocks::colision_top(FloatRect otherbox)
 	//if ((colbox.top <= otherbox.top + otherbox.height) && (otherbox.top  < colbox.top) && (otherbox.left + otherbox.width >= colbox.left) && (otherbox.left + otherbox.width <= colbox.left + colbox.width))//top colision
 	{
 		std::cout << "Top\n";
-		//lasttop = true;
 		return true;
 	}
 	else
 	{
-		//std::cout << "NieTop\n";
-		//lasttop = false;
 		return false;
 	}
 }
@@ -106,12 +95,10 @@ bool Blocks::colision_bottom(FloatRect otherbox)
 	//if ((colbox.top + colbox.height >= otherbox.top) && (otherbox.top + otherbox.height > colbox.top + colbox.height) && (otherbox.left + otherbox.width >= colbox.left) && (otherbox.left + otherbox.width <= colbox.left + colbox.width))//bottom colision
 	{
 		std::cout << "Bottom\n";
-		//lastbottom = true;
 		return true;
 	}
 	else
 	{
-		//lastbottom = false;
 		return false;
 	}
 }
@@ -122,12 +109,10 @@ bool Blocks::colision_left(FloatRect otherbox)
 		(otherbox.top <= colbox.top + wspolczynnikDoskonalosciA * colbox.height) && (otherbox.top + wspolczynnikDoskonalosciA * otherbox.height >= colbox.top))//left colision
 	{
 		std::cout << "Left\n";
-		//lastleft = true;
 		return true;
 	}
 	else
 	{
-		//lastleft = false;
 		return false;
 	}
 }
@@ -138,12 +123,10 @@ bool Blocks::colision_right(FloatRect otherbox)
 		(otherbox.top <= colbox.top + wspolczynnikDoskonalosciA * colbox.height) && (otherbox.top + wspolczynnikDoskonalosciA * otherbox.height >= colbox.top))//right colision
 	{
 		std::cout << "right\n";
-		//lastright = true;
 		return true;
 	}
 	else
 	{
-		//lastright = false;
 		return false;
 	}
 }
@@ -152,12 +135,10 @@ bool Blocks::colision_total(FloatRect otherbox)
 {
 	if (colision_bottom(otherbox) || colision_left(otherbox) || colision_right(otherbox) || colision_top(otherbox))
 	{
-		//lasttotal = true;
 		return true;
 	}
 	else
 	{
-		//lasttotal = false;
 		return false;
 	}
 }
@@ -173,7 +154,6 @@ WinCube::WinCube(int width, int height, float posX, float posY) :
 
 KillCube::KillCube(int ile_width, int ile_hight, float posX, float posY, Texture &texture, Color color)
 {
-	//size = Game::playerStartSize;
 
 	for (int i = 0; i < ile_width; i++)
 	{
