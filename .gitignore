@@ -35,5 +35,5 @@ Debug
 Release
 SFMLprojv3/Debug
 SFMLprojv3/Release
-*.vcxproj
-*.vcxproj.filters
+
+!*.exe
