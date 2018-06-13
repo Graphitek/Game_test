@@ -4,6 +4,8 @@ String Game::path = "resources/";
 String Game::txt_path = path + "textures/";
 String Game::font_path = path + "fonts/";
 
+std::string Game::NoTexture = "Texture load error\nDid you add resources folder to exe file directory ?\n";
+
 float Game::playerXsize = 30;
 float Game::playerYsize = 30;
 Vector2f Game::playerStartSize(Game::playerXsize, Game::playerYsize);
@@ -57,9 +59,11 @@ Game::Game() :
 	info.setPosition(Vector2f(20, 20));//koniec test
 
 
-	if (player_texture.loadFromFile(txt_path + "square.jpg")) { player.setTexture(player_texture); };
+	if (player_texture.loadFromFile(txt_path + "square.jpg")) { player.setTexture(player_texture); }
+	else throw NoTexture;
 	player.setFrame(playerFrameSize, Color::Black); 
 	if (bggame_texture.loadFromFile(txt_path + "bggamefinal.png")) { bggame.setTexture(&bggame_texture); bggame2.setTexture(&bggame_texture); }
+	else throw NoTexture;
 	bggame.setOrigin(bggame.getSize().x / 2, bggame.getSize().y / 2);
 	bggame.setPosition(WindowX / 2, WindowY / 2);
 	bggame2.setOrigin(bggame2.getSize().x / 2, bggame2.getSize().y / 2);
@@ -70,6 +74,7 @@ Game::Game() :
 	world.setCubes();
 
 	clock.restart();
+
 }
 
 

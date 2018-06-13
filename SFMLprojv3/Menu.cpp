@@ -22,13 +22,13 @@ Menu::Menu(float WindowX, float WindowY) :
 	this->WindowY = WindowY;
 	setPos();
 
-	if (!tlo.loadFromFile(Game::txt_path + "bgmenu.jpg")) {};
+	if (!tlo.loadFromFile(Game::txt_path + "bgmenu.jpg")) { throw Game::NoTexture; };
 	bg.setOrigin(WindowX/2,WindowY/2);
 	bg.setPosition(WindowX / 2, WindowY / 2);
 	bg.setColor(Color(255, 255, 255, 200));
 	bg.setTexture(tlo);
 
-	if (!font.loadFromFile(Game::font_path + "IndieFlower.ttf")) {};
+	if (!font.loadFromFile(Game::font_path + "IndieFlower.ttf")) { throw Game::NoTexture; };
 	text[0].setFont(font);
 	text[0].setString("Play");
 	text[0].setCharacterSize(bigfontsize);

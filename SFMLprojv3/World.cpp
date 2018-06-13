@@ -74,6 +74,7 @@ void World::setCubes()
 		cubes.push_back(Cube(2, 1, 143, 16, cube_txt, Color(0, 0, 0, 120)));
 		cubes.push_back(Cube(1, 1, 142, 17, cube_txt, Color(0, 0, 0, 120)));
 	}
+	else throw Game::NoTexture;
 	//kill cubes
 	if (killcube2_txt.loadFromFile(txt_path + "killgradientblackv2.png"))
 	{
@@ -81,6 +82,7 @@ void World::setCubes()
 		killcubes.push_back(KillCube(6, 1, 99, 14, killcube2_txt, Color(83, 0, 135, 255)));
 		//killcubes.push_back(KillCube(1, 1, 139, 16, killcube2_txt, Color(83, 0, 135, 255)));
 	}
+	else throw Game::NoTexture;
 	if (killcube_txt.loadFromFile(txt_path + "killgradientblackv6.png"))
 	{
 		killcubes.push_back(KillCube(36, 1, 11, 0.5, killcube_txt, Color(83, 0, 135, 255)));
@@ -93,6 +95,7 @@ void World::setCubes()
 		killcubes.push_back(KillCube(20, 1, 140, 0.5, killcube_txt, Color(83, 0, 135, 255)));
 
 	}
+	else throw Game::NoTexture;
 
 
 }

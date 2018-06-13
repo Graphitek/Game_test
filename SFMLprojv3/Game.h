@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <math.h>
+#include <string>
 //#include <thread>
 //#include <mutex>
 #include "Player.h"
@@ -55,6 +56,7 @@ public:
 	static float startSpeed, startGravityforce, startJumpforce;
 	static float framelimit;
 	static int frameMultiplayer;
+	static std::string NoTexture;
 
 	//void RenderThred();
 	void draw();
