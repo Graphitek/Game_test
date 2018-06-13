@@ -31,9 +31,10 @@
 *.app
 
 .vs
-Debug
-Release
 SFMLprojv3/Debug
 SFMLprojv3/Release
+*.ilk
+*.pdb
+*.iobj
+*.ipdb
 
-!*.exe
