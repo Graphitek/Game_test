@@ -31,6 +31,7 @@
 *.app
 
 .vs
+Debug
 SFMLprojv3/Debug
 SFMLprojv3/Release
 *.ilk
