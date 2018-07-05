@@ -1,44 +1,74 @@
 #pragma once
 #include "SFML\Graphics.hpp"
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <algorithm>
 
 using namespace sf;
+using namespace std;
 
-class Menu
+class MenuBase
 {
 public:
+	MenuBase();
+	int whatclicked();
 	int fontsize, bigfontsize;
+	int iterindex;
 	float WindowX, WindowY;
 	Font font;
-	int whatclicked();
-	Menu(float WindowX, float WindowY);
 	void draw(RenderWindow &okno);
 	void MoveUp();
 	void MoveDown();
 	bool MenuState();
 	void setMenuState(bool state);
+	void setCertainString(string zawartosc, int index);
 	void setMenuPos(float pos);
+	string do_2(double liczba);
+	string do_3(double liczba);
+
+protected:
+	int selected, ileopcji, selectedMin, selectedMax;
+	Sprite bg;
+	Texture tlo;// robi siê kopia przezucic do menagera 
+	void setPos(float x);
+	vector<Vector2f> poslist;
+	vector<Text> text;
+	bool MenuIsOn;
+	float oldpos;
+	float startPos;
+	string czas;
+
+};
+
+class Menu : public MenuBase
+{
+public:
+	Menu(float WindowX, float WindowY);
 	bool firstRun();
 	void setfirstRun(bool state);
 	void setFirstString(String name);
 
-protected:
-	int selected, ileopcji;
-	float oldpos;
-	Sprite bg;
-	Texture tlo;
-	void setPos();
 private:
-
-	bool MenuIsOn, firstrun;
-
-	Vector2f pos[5];
-	//float lpos;
-
-	Text text[5];
+	bool firstrun;
 };
 
-/*class TopResults : public Menu
+class TopResults : public MenuBase
 {
+	fstream top;
+	std::string resultpath, tresc, temp;
+	std::vector<std::string> results_s;
+	std::vector <float> results_f;
+	float worstResult;
+	int iter, visibleresults;
 
+public:
+	TopResults(float WindowX, float WindowY);
+	void saveresult(string result);
+	void getresults();
+	void refreshLeaderboards();
+	void refreshLeaderboards2();
+	void refreshAllLb();
+	void clearResults();
 };
-*/

@@ -79,7 +79,7 @@ bool Blocks::colision_top(FloatRect otherbox)
 		(otherbox.left + wspolczynnikDoskonalosciA * otherbox.width >= colbox.left) && (otherbox.left + wspolczynnikDoskonalosciB * otherbox.width <= colbox.left + colbox.width))//top colision
 	//if ((colbox.top <= otherbox.top + otherbox.height) && (otherbox.top  < colbox.top) && (otherbox.left + otherbox.width >= colbox.left) && (otherbox.left + otherbox.width <= colbox.left + colbox.width))//top colision
 	{
-		std::cout << "Top\n";
+		//std::cout << "Top\n";
 		return true;
 	}
 	else
@@ -94,7 +94,7 @@ bool Blocks::colision_bottom(FloatRect otherbox)
 		(otherbox.left + wspolczynnikDoskonalosciA * otherbox.width >= colbox.left) && (otherbox.left + wspolczynnikDoskonalosciB * otherbox.width <= colbox.left + colbox.width))//bottom colision
 	//if ((colbox.top + colbox.height >= otherbox.top) && (otherbox.top + otherbox.height > colbox.top + colbox.height) && (otherbox.left + otherbox.width >= colbox.left) && (otherbox.left + otherbox.width <= colbox.left + colbox.width))//bottom colision
 	{
-		std::cout << "Bottom\n";
+		//std::cout << "Bottom\n";
 		return true;
 	}
 	else
@@ -108,7 +108,7 @@ bool Blocks::colision_left(FloatRect otherbox)
 	if ((colbox.left <= otherbox.left + otherbox.width) && (otherbox.left < colbox.left) &&
 		(otherbox.top <= colbox.top + wspolczynnikDoskonalosciA * colbox.height) && (otherbox.top + wspolczynnikDoskonalosciA * otherbox.height >= colbox.top))//left colision
 	{
-		std::cout << "Left\n";
+		//std::cout << "Left\n";
 		return true;
 	}
 	else
@@ -122,7 +122,7 @@ bool Blocks::colision_right(FloatRect otherbox)
 	if ((colbox.left + colbox.width >= otherbox.left) && (otherbox.left + otherbox.width > colbox.left + colbox.width) && //jezepi do pierwszego warunku dodamy 1 dziala ale jest przerwa 1 pix
 		(otherbox.top <= colbox.top + wspolczynnikDoskonalosciA * colbox.height) && (otherbox.top + wspolczynnikDoskonalosciA * otherbox.height >= colbox.top))//right colision
 	{
-		std::cout << "right\n";
+		//std::cout << "right\n";
 		return true;
 	}
 	else

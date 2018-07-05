@@ -5,6 +5,7 @@
 #include <string>
 //#include <thread>
 //#include <mutex>
+#include "ResourceManager.h"
 #include "Player.h"
 #include "Menu.h"
 #include "World.h"
@@ -15,6 +16,7 @@ class Game
 {
 private:
 	float WhereIsViewX;
+	std::string result;
 	Vector2f playerStartPos;
 	bool lose, win;
 	RenderWindow okno;
@@ -23,10 +25,10 @@ private:
 	Menu menu;
 	Text pausemessage;
 	Text info;
-	Texture player_texture;
-	Texture bggame_texture;
 	RectangleShape bggame, bggame2;
 	World world;
+	TopResults results;
+	ResourceManager manager;
 
 	Clock clock;
 	Time rtime;
@@ -37,13 +39,15 @@ private:
 	void youwin();
 	void reset();
 	void RoundTime();
-
+	void gamerunning();
 	void bggamemove();
+	void moveMenus();
 
 public:
 	Game();
 	void run();
 	std::string do_2(double liczba);
+	std::string do_3(double liczba);
 	std::string czas;
 
 	static Vector2f playerStartSize;
@@ -57,7 +61,7 @@ public:
 	static float framelimit;
 	static int frameMultiplayer;
 	static std::string NoTexture;
+	static std::string FileError;
 
 	//void RenderThred();
-	void draw();
 };

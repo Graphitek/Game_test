@@ -5,6 +5,7 @@ String Game::txt_path = path + "textures/";
 String Game::font_path = path + "fonts/";
 
 std::string Game::NoTexture = "Texture load error\nDid you add resources folder to exe file directory ?\n";
+std::string Game::FileError = "Error during opening/creating leaderboards file\n";
 
 float Game::playerXsize = 30;
 float Game::playerYsize = 30;
@@ -28,15 +29,16 @@ Game::Game() :
 	player(WindowX, WindowY),
 	menu(WindowX, WindowY),
 	pausemessage(),
-	info(), //test
+	info(),
 	view(Vector2f(WindowX / 2, WindowY / 2), Vector2f(WindowX, WindowY)),
 	okno(VideoMode(WindowX, WindowY), "name123", Style::Close | Style::Titlebar),
-	player_texture(),
 	bggame(Vector2f(WindowX, WindowY)),
 	bggame2(Vector2f(WindowX, WindowY)),
-	world(path),
+	world(path, &manager),
 	clock(),
-	rtime()
+	rtime(),
+	results(WindowX, WindowY),
+	manager()
 {
 	okno.setFramerateLimit(frameMultiplayer * framelimit);
 	//okno.setView(view);
@@ -52,29 +54,25 @@ Game::Game() :
 	pausemessage.setFillColor(Color::Magenta);
 	pausemessage.setPosition(Vector2f(WindowX / 8, WindowY / 3));
 
-
-	info.setFont(menu.font);//test
+	info.setFont(menu.font);
 	info.setCharacterSize(30);
 	info.setFillColor(Color::White);
-	info.setPosition(Vector2f(20, 20));//koniec test
+	info.setPosition(Vector2f(20, 20));
 
-
-	if (player_texture.loadFromFile(txt_path + "square.jpg")) { player.setTexture(player_texture); }
-	else throw NoTexture;
+	player.setTexture(*manager.getTexture("square.jpg"));
 	player.setFrame(playerFrameSize, Color::Black); 
-	if (bggame_texture.loadFromFile(txt_path + "bggamefinal.png")) { bggame.setTexture(&bggame_texture); bggame2.setTexture(&bggame_texture); }
-	else throw NoTexture;
+	bggame.setTexture(manager.getTexture("bggamefinal.png"));
+	bggame2.setTexture(manager.getTexture("bggamefinal.png"));
+
 	bggame.setOrigin(bggame.getSize().x / 2, bggame.getSize().y / 2);
 	bggame.setPosition(WindowX / 2, WindowY / 2);
 	bggame2.setOrigin(bggame2.getSize().x / 2, bggame2.getSize().y / 2);
 	bggame2.setPosition(bggame.getPosition().x + bggame.getSize().x, WindowY / 2);
 	//view.zoom(3); //temp
 
-
 	world.setCubes();
 
 	clock.restart();
-
 }
 
 
@@ -120,6 +118,12 @@ void Game::bggamemove()
 
 }
 
+void Game::moveMenus()
+{
+	menu.setMenuPos(WhereIsViewX);
+	results.setMenuPos(WhereIsViewX);
+}
+
 void Game::youlose()
 {
 	if (world.YouLose() || (player.left().x <= WhereIsViewX - WindowX / 2) || (player.bottom().y >= WindowY + playerStartSize.y))
@@ -128,7 +132,7 @@ void Game::youlose()
 			lose = true;
 			pausemessage.setString("You LOST !");
 			menu.setFirstString("Play again");
-			menu.setMenuPos(WhereIsViewX);
+			moveMenus();
 			pausemessage.setPosition(Vector2f(WhereIsViewX - 0.85*WindowX / 2, WindowY / 3));
 			menu.setMenuState(1);
 	}
@@ -139,12 +143,15 @@ void Game::youwin()
 	if (world.YouWin() && lose == false)
 	{
 		win = true;
-		pausemessage.setString("You WON !\nTime: " + do_2(rtime.asSeconds()) + " s");
+		result = do_2(rtime.asSeconds());
+		pausemessage.setString("You WON !\nTime: " + result + " s");
 		menu.setFirstString("Play again");
-		menu.setMenuPos(WhereIsViewX);
+		moveMenus();
 		pausemessage.setPosition(Vector2f(WhereIsViewX - 0.85*WindowX / 2, WindowY / 4));
 		menu.setMenuState(1);
-	}//gdyby coœ to mo¿na elsa z false dopisaæ
+		results.saveresult(result);
+		results.refreshAllLb();
+	}
 }
 
 void Game::reset()
@@ -172,6 +179,14 @@ std::string Game::do_2(double liczba)
 	return czas;
 }
 
+std::string Game::do_3(double liczba)
+{
+	liczba = round(liczba * 1000) / 1000;
+	czas = std::to_string(liczba);
+	czas.erase(czas.end() - 3, czas.end());
+	return czas;
+}
+
 
 
 void Game::RoundTime()
@@ -188,13 +203,22 @@ void Game::RoundTime()
 
 }
 
-void Game::draw()
+void Game::gamerunning()
 {
-		okno.draw(bggame);
-		okno.draw(bggame2);
-		okno.draw(player);
-		world.draw(okno);
-		okno.draw(info);
+	okno.draw(bggame);
+	okno.draw(bggame2);
+	bggamemove();
+	world.draw(okno);
+	world.colision(player);
+	okno.draw(player);
+	okno.setView(view);
+	player.update();
+	trackview();
+	youlose();
+	youwin();
+	RoundTime();
+	info.setPosition(WhereIsViewX - WindowX / 2 + 20, 20);
+	okno.draw(info);
 }
 
 void Game::run()
@@ -225,6 +249,10 @@ void Game::run()
 					{
 						player.gravityForce = player.SgravityForce;
 					}
+					if (results.MenuState() == 1)
+					{
+						results.MoveDown();
+					}
 					}
 					break;
 				case Keyboard::W:
@@ -232,6 +260,10 @@ void Game::run()
 					if (menu.MenuState() == 1)
 					{
 						menu.MoveUp();
+					}
+					if (results.MenuState() == 1)
+					{
+						results.MoveUp();
 					}
 					break;
 				case Keyboard::Return:
@@ -245,6 +277,8 @@ void Game::run()
 							menu.setMenuState(false);
 							break;
 						case 1:
+							results.setMenuState(true);
+							menu.setMenuState(false);
 							break;
 						case 2:
 							break;
@@ -256,19 +290,33 @@ void Game::run()
 							break;
 						}
 					}
+
+					if (results.MenuState() == 1)
+					{
+						switch (results.whatclicked())
+						{
+							//warunki przy klikaniu na wyniki
+						}
+					}
 					break;
 				case Keyboard::BackSpace:
 				case Keyboard::Escape:
-					if (menu.MenuState() != 1)
+					if (menu.MenuState() != 1 && results.MenuState() != 1)
 					{
 						menu.setFirstString("Resume");
 						menu.setMenuState(true);
 						pausemessage.setPosition(Vector2f(WhereIsViewX - 0.75*WindowX / 2, WindowY / 3));
-						menu.setMenuPos(WhereIsViewX);
+						moveMenus();
 					}
 					else if (menu.firstRun() == 0 && lose != 1)
 					{
 						menu.setMenuState(false);
+					}
+
+					if (results.MenuState() == 1)
+					{
+						menu.setMenuState(true);
+						results.setMenuState(false);
 					}
 						break;
 				}
@@ -294,33 +342,18 @@ void Game::run()
 			menu.draw(okno);
 			if (menu.firstRun() != 1) { okno.draw(pausemessage); }
 		}
-		if (menu.MenuState() != 1)
+		if (results.MenuState() == 1)
+		{
+			results.draw(okno);
+		}
+		if (menu.MenuState() != 1 && results.MenuState() != 1)
 		{
 			//Time time = clock.getElapsedTime();
 			//std::cout << 1.0f / time.asSeconds() << std::endl;
 			//clock.restart().asSeconds();
-
-			okno.draw(bggame);
-			okno.draw(bggame2);
-			bggamemove();
-			
-			
-			world.draw(okno);
-			world.colision(player);
-
-
-			okno.draw(player);
-			okno.setView(view);
-			player.update();
-			trackview();
-			youlose();
-			youwin();
-			RoundTime();
 			//info.setString(std::to_string((int)player.getpos().x));//test
 			//info.setString(std::to_string((int)1.0f / time.asSeconds()));
-			info.setPosition(WhereIsViewX - WindowX / 2 + 20, 20);
-			okno.draw(info);
-			//draw();
+			gamerunning();
 		}
 		okno.display();
 
