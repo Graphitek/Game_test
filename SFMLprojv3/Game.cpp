@@ -19,7 +19,7 @@ float Game::WindowY = 720;
 int Game::frameMultiplayer = 1;
 float Game::framelimit = 60;
 //float Game::startSpeed = Game::framelimit / (12 * Game::frameMultiplayer);
-float Game::startSpeed = 5;
+float Game::startSpeed = 5; //5
 float Game::startJumpforce = 15;
 float Game::startGravityforce = 1;
 
@@ -205,7 +205,7 @@ void Game::RoundTime()
 
 void Game::gamerunning()
 {
-	okno.draw(bggame);
+	/*okno.draw(bggame);
 	okno.draw(bggame2);
 	bggamemove();
 	world.draw(okno);
@@ -213,6 +213,21 @@ void Game::gamerunning()
 	okno.draw(player);
 	okno.setView(view);
 	player.update();
+	trackview();
+	youlose();
+	youwin();
+	RoundTime();
+	info.setPosition(WhereIsViewX - WindowX / 2 + 20, 20);
+	okno.draw(info);*/
+
+	okno.draw(bggame);
+	okno.draw(bggame2);
+	bggamemove();
+	world.draw(okno);
+	okno.draw(player);
+	okno.setView(view);
+	player.update();
+	world.colision(player);
 	trackview();
 	youlose();
 	youwin();

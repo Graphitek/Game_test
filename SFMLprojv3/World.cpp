@@ -15,12 +15,12 @@ void World::setCubes()
 	wincubes.push_back(WinCube(3, 6, 141, 15));
 
 	//map cubes
-	cubes.push_back(Cube(11, 1, 0, 1, *cube_txt, Color(203, 0, 255, 255))); // 12 length dla testu
+	cubes.push_back(Cube(12, 1, 0, 1, *cube_txt, Color(203, 0, 255, 255))); // 12 length dla testu
 
-	cubes.push_back(Cube(1, 2, 6, 2, *cube_txt, Color(255, 145, 20, 255))); // test 2 colision
-	cubes.push_back(Cube(1, 2, 10, 2, *cube_txt, Color(255, 145, 20, 255))); // test 2 colision
-
-	cubes.push_back(Cube(5, 2, 6, 4, *cube_txt, Color(255, 145, 20, 255)));
+	cubes.push_back(Cube(1, 4, 6, 2, *cube_txt, Color(255, 145, 20, 255))); // test 2 colision // 1 2 6 2
+	cubes.push_back(Cube(1, 4, 10, 2, *cube_txt, Color(255, 145, 20, 255))); // test 2 colision// 1 2 10 2
+	
+	cubes.push_back(Cube(3, 2, 7, 4, *cube_txt, Color(255, 145, 20, 255))); // 5 2 6 4
 	cubes.push_back(Cube(5, 1, 6, 9, *cube_txt, Color(255, 145, 20, 255)));
 	cubes.push_back(Cube(3, 1, 16, 9, *cube_txt, Color(255, 145, 20, 255)));
 	cubes.push_back(Cube(3, 1, 23, 3, *cube_txt, Color(255, 145, 20, 255)));
@@ -127,7 +127,7 @@ void World::colision(Player &player)
 				player.setgravityforce(0);
 				player.setVerticalSpeed(0);
 				player.setInAir(false);
-				player.setpos(Vector2f(player.getpos().x, bloczki.getColBox().top - player.getBoundingBox().width / 2));
+				player.setpos(Vector2f(player.getpos().x, bloczki.getColBox().top - player.getBoundingBox().height / 2));
 				//std::cout << "Bloczki top: " << bloczki.getColBox().top << "\nPlayer x: " << player.getpos().x << std::endl;
 				player.setInAir(0); // test blokady skoku przy spadaniu z bloczka //dziala
 				anytop = 1;
@@ -141,7 +141,7 @@ void World::colision(Player &player)
 			if (bloczki.colision_bottom(player.getBoundingBox()))
 			{
 				player.setVerticalSpeed(0);
-				player.setpos(Vector2f(player.getpos().x, bloczki.getColBox().top + bloczki.getColBox().height + player.getBoundingBox().width / 2));
+				player.setpos(Vector2f(player.getpos().x, bloczki.getColBox().top + bloczki.getColBox().height + player.getBoundingBox().height / 2));
 			}
 			else
 			{

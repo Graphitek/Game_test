@@ -105,7 +105,7 @@ bool Blocks::colision_bottom(FloatRect otherbox)
 
 bool Blocks::colision_left(FloatRect otherbox)
 {
-	if ((colbox.left <= otherbox.left + otherbox.width) && (otherbox.left < colbox.left) &&
+	if ((colbox.left <= otherbox.left + otherbox.width + 1) && (otherbox.left < colbox.left) &&
 		(otherbox.top <= colbox.top + wspolczynnikDoskonalosciA * colbox.height) && (otherbox.top + wspolczynnikDoskonalosciA * otherbox.height >= colbox.top))//left colision
 	{
 		//std::cout << "Left\n";
@@ -119,7 +119,7 @@ bool Blocks::colision_left(FloatRect otherbox)
 
 bool Blocks::colision_right(FloatRect otherbox)
 {
-	if ((colbox.left + colbox.width >= otherbox.left) && (otherbox.left + otherbox.width > colbox.left + colbox.width) && //jezepi do pierwszego warunku dodamy 1 dziala ale jest przerwa 1 pix
+	if ((colbox.left + colbox.width + 1 >= otherbox.left) && (otherbox.left + otherbox.width > colbox.left + colbox.width) && //jezepi do pierwszego warunku dodamy 1 dziala ale jest przerwa 1 pix
 		(otherbox.top <= colbox.top + wspolczynnikDoskonalosciA * colbox.height) && (otherbox.top + wspolczynnikDoskonalosciA * otherbox.height >= colbox.top))//right colision
 	{
 		//std::cout << "right\n";
