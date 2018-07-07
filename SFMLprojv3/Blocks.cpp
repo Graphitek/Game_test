@@ -77,7 +77,6 @@ bool Blocks::colision_top(FloatRect otherbox)
 {
 	if ((colbox.top <= otherbox.top + otherbox.height) && (otherbox.top < colbox.top) &&
 		(otherbox.left + wspolczynnikDoskonalosciA * otherbox.width >= colbox.left) && (otherbox.left + wspolczynnikDoskonalosciB * otherbox.width <= colbox.left + colbox.width))//top colision
-	//if ((colbox.top <= otherbox.top + otherbox.height) && (otherbox.top  < colbox.top) && (otherbox.left + otherbox.width >= colbox.left) && (otherbox.left + otherbox.width <= colbox.left + colbox.width))//top colision
 	{
 		//std::cout << "Top\n";
 		return true;
@@ -92,7 +91,6 @@ bool Blocks::colision_bottom(FloatRect otherbox)
 {
 	if ((colbox.top + colbox.height >= otherbox.top) && (otherbox.top + otherbox.height > colbox.top + colbox.height) &&
 		(otherbox.left + wspolczynnikDoskonalosciA * otherbox.width >= colbox.left) && (otherbox.left + wspolczynnikDoskonalosciB * otherbox.width <= colbox.left + colbox.width))//bottom colision
-	//if ((colbox.top + colbox.height >= otherbox.top) && (otherbox.top + otherbox.height > colbox.top + colbox.height) && (otherbox.left + otherbox.width >= colbox.left) && (otherbox.left + otherbox.width <= colbox.left + colbox.width))//bottom colision
 	{
 		//std::cout << "Bottom\n";
 		return true;

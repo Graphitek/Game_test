@@ -19,7 +19,7 @@ float Game::WindowY = 720;
 int Game::frameMultiplayer = 1;
 float Game::framelimit = 60;
 //float Game::startSpeed = Game::framelimit / (12 * Game::frameMultiplayer);
-float Game::startSpeed = 5; //5
+float Game::startSpeed = 5;
 float Game::startJumpforce = 15;
 float Game::startGravityforce = 1;
 

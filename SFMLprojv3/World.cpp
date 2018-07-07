@@ -15,7 +15,7 @@ void World::setCubes()
 	wincubes.push_back(WinCube(3, 6, 141, 15));
 
 	//map cubes
-	cubes.push_back(Cube(12, 1, 0, 1, *cube_txt, Color(203, 0, 255, 255))); // 12 length dla testu
+	cubes.push_back(Cube(11, 1, 0, 1, *cube_txt, Color(203, 0, 255, 255))); // 12 length dla testu
 
 	cubes.push_back(Cube(1, 4, 6, 2, *cube_txt, Color(255, 145, 20, 255))); // test 2 colision // 1 2 6 2
 	cubes.push_back(Cube(1, 4, 10, 2, *cube_txt, Color(255, 145, 20, 255))); // test 2 colision// 1 2 10 2
