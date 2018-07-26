@@ -38,7 +38,8 @@ Game::Game() :
 	clock(),
 	rtime(),
 	results(WindowX, WindowY),
-	manager()
+	manager(),
+	nickname(WindowX, WindowY)
 {
 	okno.setFramerateLimit(frameMultiplayer * framelimit);
 	//okno.setView(view);
@@ -122,6 +123,7 @@ void Game::moveMenus()
 {
 	menu.setMenuPos(WhereIsViewX);
 	results.setMenuPos(WhereIsViewX);
+	nickname.setMenuPos(WhereIsViewX);
 }
 
 void Game::youlose()
@@ -148,7 +150,14 @@ void Game::youwin()
 		menu.setFirstString("Play again");
 		moveMenus();
 		pausemessage.setPosition(Vector2f(WhereIsViewX - 0.85*WindowX / 2, WindowY / 4));
-		menu.setMenuState(1);
+		if (results.newResult(stof(result)))
+		{
+			nickname.setMenuState(true);
+		}
+		else
+		{
+			menu.setMenuState(1);
+		}
 		results.saveresult(result);
 		results.refreshAllLb();
 	}
@@ -240,9 +249,10 @@ void Game::run()
 {
 	while (okno.isOpen())
 	{
-		Event event;
 		while (okno.pollEvent(event))
 		{
+			if(nickname.MenuState())
+			nickname.dataEnter(okno, event);
 			switch (event.type)
 			{
 			case Event::Closed:
@@ -305,6 +315,11 @@ void Game::run()
 							break;
 						}
 					}
+					if (nickname.MenuState() == 1)
+					{
+						nickname.setMenuState(false);
+						menu.setMenuState(true);
+					}
 
 					if (results.MenuState() == 1)
 					{
@@ -316,7 +331,7 @@ void Game::run()
 					break;
 				case Keyboard::BackSpace:
 				case Keyboard::Escape:
-					if (menu.MenuState() != 1 && results.MenuState() != 1)
+					if (menu.MenuState() != 1 && results.MenuState() != 1 && nickname.MenuState() != 1)
 					{
 						menu.setFirstString("Resume");
 						menu.setMenuState(true);
@@ -355,13 +370,19 @@ void Game::run()
 		if (menu.MenuState() == 1)
 		{
 			menu.draw(okno);
+			//nickname.draw(okno); // test draw nickname
 			if (menu.firstRun() != 1) { okno.draw(pausemessage); }
 		}
 		if (results.MenuState() == 1)
 		{
 			results.draw(okno);
 		}
-		if (menu.MenuState() != 1 && results.MenuState() != 1)
+		if (nickname.MenuState() == 1)
+		{
+			nickname.draw(okno);
+			okno.draw(pausemessage);
+		}
+		if (menu.MenuState() != 1 && results.MenuState() != 1 && nickname.MenuState() != 1)
 		{
 			//Time time = clock.getElapsedTime();
 			//std::cout << 1.0f / time.asSeconds() << std::endl;

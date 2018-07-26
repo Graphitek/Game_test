@@ -29,9 +29,12 @@ private:
 	World world;
 	TopResults results;
 	ResourceManager manager;
+	EnterNick nickname;
 
 	Clock clock;
 	Time rtime;
+
+	Event event;
 
 private:
 	void trackview();

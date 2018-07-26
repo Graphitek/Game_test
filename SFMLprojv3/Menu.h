@@ -71,4 +71,15 @@ public:
 	void refreshLeaderboards2();
 	void refreshAllLb();
 	void clearResults();
+	bool newResult(float result);
+};
+
+class EnterNick : public MenuBase
+{
+	string nick;
+
+public:
+	EnterNick(float WindowX, float WindowY); // raczej mo¿na zmieniæ bez windowX i y
+	string getNick();
+	void dataEnter(RenderWindow &okno, Event &event);
 };

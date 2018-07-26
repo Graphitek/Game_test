@@ -218,7 +218,6 @@ void TopResults::saveresult(string result)
 		throw Game::FileError;
 	}
 
-
 }
 
 void TopResults::getresults()
@@ -252,6 +251,16 @@ void TopResults::getresults()
 		top.close();
 	}
 
+}
+
+bool TopResults::newResult(float result)
+{
+	if (result < worstResult)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 void TopResults::refreshLeaderboards()
@@ -315,3 +324,62 @@ void TopResults::clearResults()
 	results_s.clear();
 	results_f.clear();
 }
+
+//***********************************************************//
+
+void EnterNick::dataEnter(RenderWindow &okno, Event &event)
+{
+	if (MenuIsOn)
+	{
+		switch (event.type)
+		{
+		case Event::TextEntered:
+		{
+			if (event.text.unicode < 128 && event.text.unicode > 45)
+			{
+				nick += static_cast<char>(event.text.unicode);
+				//std::cout << nick << std::endl;
+				//std::cout << "Character typed: " << static_cast<char>(event.text.unicode) << std::endl;
+			}
+			else if (event.text.unicode == 8 && nick.size()>0)
+			{
+				nick.erase(nick.end() - 1, nick.end());
+			}
+			std::cout << nick << std::endl;
+			text[1].setString(nick);
+		}
+
+		}
+	}
+}
+
+EnterNick::EnterNick(float WindowX, float WindowY) :
+	nick("No_Nickname")
+{
+	startPos = WindowX / 2 - WindowX / 2.3;
+	fontsize = 32;
+	bigfontsize = 48;
+	ileopcji = 2;
+	oldpos = WindowX / 2;
+	selectedMin = 1;
+	selectedMax = 1;
+	setPos(startPos);
+
+
+	MenuIsOn = false;
+	text[0].setString("Enter your nickname: ");
+	text[0].setFont(font);
+	text[0].setPosition(WindowX / 5, WindowY*0.05);
+	text[0].setFillColor(Color::Red);
+	text[0].setCharacterSize(bigfontsize);
+	text[1].setString(nick);
+	text[1].setPosition(WindowX / 5, WindowY*0.15);
+	text[1].setFont(font);
+	text[1].setFillColor(Color::Green);
+	text[1].setCharacterSize(fontsize);
+}
+
+/*void EnterNick::set_nickState(bool x)
+{
+	MenuIsOn = x;
+}*/
