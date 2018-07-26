@@ -42,3 +42,5 @@ SFMLprojv3/Release
 *.vcxproj
 *.sln
 targetver.h
+SFMLprojv3.vcxproj.filters
+SFMLprojv3.vcxproj.user
